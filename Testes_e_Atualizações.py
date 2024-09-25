@@ -22,18 +22,22 @@ class Quest:
                 break
 
         return self.quests
-    
+
     def show_quests(self, specific_quest):
         for indice, q in enumerate(specific_quest, start=1):
             status_marker = ("[X]" if q.status == "Concluída" else "[ ]")
-            print(f"{indice}: {status_marker} {q.description}\nHorário: {q.time}\nDificuldade: {q.difficulty}\nPrioridade: {q.priority}\nStatus: {q.status}\n")
+            print(f"""{indice}: {status_marker} {q.description}\n
+                  Horário: {q.time}\n
+                  Dificuldade: {q.difficulty}\n
+                  Prioridade: {q.priority}\n
+                  Status: {q.status}\n""")
             print("\n")
-    
+
     def complete_quest(self):
         choice_quest = int(input("Informe qual missão deseja marcar como concluída: ")) - 1
         self.quests[choice_quest].status = "Concluída"
         print(f"Missão '{self.quests[choice_quest].description}' concluída!")
-        
+
         self.completed_quests = [q for q in self.quests if q.status == "Concluída"]
         self.pendant_quests = [q for q in self.quests if q.status != "Concluída"]
 
@@ -44,7 +48,7 @@ class Quest:
         self.quests[choice_quest].difficulty = input("Informe a dificuldade [1-3]: ")
         self.quests[choice_quest].priority = input("Informe a prioridade [1-3]: ")
         print(f"Missão '{self.quests[choice_quest].description}' atualizada!")
-            
+
     def delete_quest(self):
         choice_quest = int(input("Informe qual missão deseja deletar: ")) - 1
         quest_description = self.quests[choice_quest].description
@@ -77,15 +81,18 @@ class User:
         self.user.append(users)
 
         return self.user
-    
+
     def show_user_info(self):
+        desc = ["Nome do usuário: ", 
+                "Experiência: ", 
+                "Nível: ", 
+                "Reputação: ", 
+                "Exp restante para próximo nível: ", 
+                "Moedas: ", 
+                "Conquistas: ", 
+                "Recompensas: "]
         for info in self.user:
-            print(f"Nome do usuário: {info.username}")
-            print(f"Nível: {info.level}")
-            print(f"Experiência: {info.experience}")
-            print(f"Moedas: {info.coins}")
-            print(f"Conquistas: {info.achievements}")
-            print(f"Recompensas: {info.rewards}\n")
+            print(desc[info], info if info != self.user.max_exp else desc[info], (info - self.user.experience))
 
     def change_username(self):
         choice_user = int(input("Informe o usuário que deseja alterar o nome: ")) - 1
@@ -95,4 +102,3 @@ class User:
 
     def gain_exp(self):
         
-
